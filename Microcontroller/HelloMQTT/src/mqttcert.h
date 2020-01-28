@@ -8,7 +8,7 @@
 
 // WiFi ssid and password, change it with your ssid and password:
 const char* WIFI_SSID = "8055129";
-const char* WIFI_PASSWORD = "Intox!00";
+const char* WIFI_PASSWORD = "";
 
 // MQTT IP address of the PC/raspberry where you installed MQTT Server:
 const char* MQTT_SERVER = "mqtt.coventry.ac.uk";
