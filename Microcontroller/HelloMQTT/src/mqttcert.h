@@ -7,8 +7,8 @@
 #include <string>
 
 // WiFi ssid and password, change it with your ssid and password:
-const char* WIFI_SSID = "8055129";
-const char* WIFI_PASSWORD = "";
+const char* WIFI_SSID = "ECL-LEGO-ROBOTS";
+const char* WIFI_PASSWORD = "9cjjp64270";
 
 // MQTT IP address of the PC/raspberry where you installed MQTT Server:
 const char* MQTT_SERVER = "mqtt.coventry.ac.uk";
@@ -16,7 +16,7 @@ const char* MQTT_CLIENT_ID = "safwatn";  // unique client ID for this device
 const std::string MQTT_USERNAME = "302CEM";
 const char* MQTT_PASSWORD = "n3fXXFZrjw";
 // topic name must be in "username/topicname" for our server format, so concatenate strings
-const std::string MQTT_TOPIC_NAME = MQTT_USERNAME + "302CEM/Rabbit/MicroController";
+const std::string MQTT_TOPIC_NAME = MQTT_USERNAME + "/Rabbit/MicroController";
 
 // TLS/SSL certificate for encrypted mqtt:
 const char* CA_CERT =
