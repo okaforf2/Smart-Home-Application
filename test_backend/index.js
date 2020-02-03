@@ -1,18 +1,35 @@
-var Koa = require('koa');
+const webSocketsServerPort = 8000;
+const webSocketServer = require('websocket').server;
+const uuidv4 = require('uuid/v4');
+const http = require('http');
+const server = http.createServer();
 
-var Router = require('koa-router');
+server.listen(webSocketsServerPort);
 
+const wsServer = new webSocketServer({
+    httpServer: server
+});
 
-var app = new Koa();
+const getUniqueID = () => {
+    const val = uuidv4();
+    return val;
+};
 
-var router = new Router();
+const clients = {};
 
-router.get('/', bonjour);
+wsServer.on('request', function (request) {
+    var userID = getUniqueID();
+    console.log((new Date()) + ' Recieved a new connection from origin ' + request.origin + '.');
+    const connection = request.accept(null, request.origin);
+    clients[userID] = connection;
+    console.log('user connected');
+    connection.on('message', function (message) {
+        console.log(message);
+        connection.send('ahoy sailor');
+    });
 
-app.use(router.routes());
+    connection.on('close', function (connection) {
+        console.log((new Date()) + " Peer " + userID + " disconnected.");
+    });
 
-app.listen(3000);
-
-function bonjour (cnx, next){
-    cnx.body = {message: 'hallo'};
-}
+});
