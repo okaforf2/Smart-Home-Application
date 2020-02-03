@@ -3,10 +3,9 @@
     "",
     "\\frontend",
     "\\frontend\\ui_frontend",
-    "\\frontend\\ui_frontend\\public",
-    "\\frontend\\ui_frontend\\src",
-    "\\frontend\\ui_frontend\\src\\components"
+    "\\Microcontroller",
+    "\\test_backend"
   ],
-  "SelectedNode": "\\frontend\\ui_frontend\\src\\App.js",
+  "SelectedNode": "\\test_backend",
   "PreviewInSolutionExplorer": false
 }

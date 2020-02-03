@@ -7,11 +7,13 @@ class Input extends Component {
   }
   mySubmitHandler = (event) => {
     event.preventDefault();
-    alert("You are submitting " + this.state.username);
-  }
+    //alert("You are submitting " + this.state.username);
+    }
+
   myChangeHandler = (event) => {
-    this.setState({username: event.target.value});
-  }
+      this.setState({ username: event.target.value });
+    }
+
   render() {
     return (
       <form onSubmit={this.mySubmitHandler}>
