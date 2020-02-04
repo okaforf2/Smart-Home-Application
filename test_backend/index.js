@@ -4,6 +4,36 @@ const uuidv4 = require('uuid/v4');
 const http = require('http');
 const server = http.createServer();
 
+var mqtt = require('mqtt');
+const fs = require('fs');
+var caFile = fs.readFileSync("mqtt.crt");
+
+var options = {
+    clientId: "testNodeServer",
+    host: "mqtt.coventry.ac.uk",
+    username: "302CEM",
+    password: "n3fXXFZrjw",
+    protocol: 'mqtts',
+    ca: caFile
+};
+
+var mqttClient = mqtt.connect("mqtt.coventry.ac.uk", options);
+
+mqttClient.on("connect", function () {
+    console.log("connected " + mqttClient.connected);
+});
+
+mqttClient.on("error", function (error) {
+    console.log("Cant connect: " + error);
+});
+
+mqttClient.on("message", function (topic, message, packet) {
+    console.log("message is: " + message);
+    console.log("topic is: " + topic);
+});
+
+mqttClient.subscribe("302CEM/RABBIT/helloWorld", { qos: 1 });
+
 server.listen(webSocketsServerPort);
 
 const wsServer = new webSocketServer({

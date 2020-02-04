@@ -3,9 +3,10 @@
     "",
     "\\frontend",
     "\\frontend\\ui_frontend",
-    "\\Microcontroller",
-    "\\test_backend"
+    "\\frontend\\ui_frontend\\public",
+    "\\frontend\\ui_frontend\\src",
+    "\\frontend\\ui_frontend\\src\\components"
   ],
-  "SelectedNode": "\\test_backend",
+  "SelectedNode": "\\frontend\\ui_frontend\\src\\components\\Input.js",
   "PreviewInSolutionExplorer": false
 }
