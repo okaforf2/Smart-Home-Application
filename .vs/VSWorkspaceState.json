@@ -5,8 +5,9 @@
     "\\frontend\\ui_frontend",
     "\\frontend\\ui_frontend\\public",
     "\\frontend\\ui_frontend\\src",
-    "\\frontend\\ui_frontend\\src\\components"
+    "\\frontend\\ui_frontend\\src\\components",
+    "\\test_backend"
   ],
-  "SelectedNode": "\\frontend\\ui_frontend\\src\\components\\Input.js",
+  "SelectedNode": "\\test_backend\\index.js",
   "PreviewInSolutionExplorer": false
 }

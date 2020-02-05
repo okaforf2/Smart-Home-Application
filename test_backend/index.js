@@ -20,16 +20,19 @@ var options = {
 var mqttClient = mqtt.connect("mqtt.coventry.ac.uk", options);
 
 mqttClient.on("connect", function () {
-    console.log("connected " + mqttClient.connected);
+    console.log("connected to mqtt broker: " + mqttClient.connected);
 });
 
 mqttClient.on("error", function (error) {
-    console.log("Cant connect: " + error);
+    console.log("Cant connect to mqtt broker: " + error);
 });
 
 mqttClient.on("message", function (topic, message, packet) {
-    console.log("message is: " + message);
-    console.log("topic is: " + topic);
+    console.log("mqtt message is: " + message);
+    console.log("mqtt topic is: " + topic);
+    clients.forEach(function each(client) {
+        client.send(message.toString());
+    });
 });
 
 mqttClient.subscribe("302CEM/RABBIT/helloWorld", { qos: 1 });
@@ -45,21 +48,27 @@ const getUniqueID = () => {
     return val;
 };
 
-const clients = {};
+const clients = [];
 
 wsServer.on('request', function (request) {
     var userID = getUniqueID();
     console.log((new Date()) + ' Recieved a new connection from origin ' + request.origin + '.');
+
     const connection = request.accept(null, request.origin);
-    clients[userID] = connection;
+    clients.push(connection);
     console.log('user connected');
+
     connection.on('message', function (message) {
         console.log(message);
         connection.send('ahoy sailor');
     });
 
     connection.on('close', function (connection) {
-        console.log((new Date()) + " Peer " + userID + " disconnected.");
+        const index = clients.indexOf(connection);
+        if (index > -1) {
+            clients.splice(index, 1);
+        }
+        console.log(new Date() + " Peer " + userID + " disconnected.");
     });
 
 });
