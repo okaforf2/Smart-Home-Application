@@ -30,9 +30,16 @@ mqttClient.on("error", function (error) {
 mqttClient.on("message", function (topic, message, packet) {
     console.log("mqtt message is: " + message);
     console.log("mqtt topic is: " + topic);
-    clients.forEach(function each(client) {
-        client.send(message.toString());
-    });
+    try {
+        JSON.parse(message);
+        clients.forEach(function each(client) {
+            client.send(message.toString());
+        });
+    } catch (err) {
+        console.log(err);
+        // Probably wasn't correct JSON format
+        // Don't send anything
+    }    
 });
 
 mqttClient.subscribe("302CEM/RABBIT/helloWorld", { qos: 1 });
@@ -61,6 +68,12 @@ wsServer.on('request', function (request) {
     connection.on('message', function (message) {
         console.log(message);
         connection.send('ahoy sailor');
+        try {
+            var parsedJson = JSON.parse(message);
+        } catch (err) {
+            // Probably wasn't correct JSON format
+            // Don't send anything
+        }    
     });
 
     connection.on('close', function (connection) {

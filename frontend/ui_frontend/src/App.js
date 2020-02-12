@@ -18,7 +18,12 @@ class App extends Component {
             console.log('WebSocket Client Connected');
         };
         client.onmessage = (message) => {
-            console.log(message);
+            try {
+                var jsonParsed = JSON.parse(message.data);
+                console.log(jsonParsed)
+            } catch (err) {
+                console.log(err);
+            }
         };
     }
 
