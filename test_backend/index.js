@@ -67,10 +67,26 @@ wsServer.on('request', function (request) {
 
     connection.on('message', function (message) {
         console.log(message);
-        connection.send('ahoy sailor');
+        //connection.send('ahoy sailor');
         try {
-            var parsedJson = JSON.parse(message);
+            var parsedJson = JSON.parse(message.utf8Data);
+            console.log("message parsed successfully: " + parsedJson);
+
+            //var clientsDuplicate = clients;
+            var clientsDuplicate = [].concat(clients);
+            console.log(clients.length);
+            console.log(clientsDuplicate.length);
+            const index = clientsDuplicate.indexOf(connection);
+            if (index > -1) {
+                console.log("found connection and splicing");
+                clientsDuplicate.splice(index, 1);
+                clientsDuplicate.forEach(function each(client) {
+                    console.log("sending message to client: " + client);
+                    client.send(message.utf8Data);
+                });
+            }
         } catch (err) {
+            console.log("Didnt parse json successfully: " + err);
             // Probably wasn't correct JSON format
             // Don't send anything
         }    
