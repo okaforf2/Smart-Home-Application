@@ -16,7 +16,7 @@ const char* MQTT_CLIENT_ID = "safwatn";  // unique client ID for this device
 const std::string MQTT_USERNAME = "302CEM";
 const char* MQTT_PASSWORD = "n3fXXFZrjw";
 // topic name must be in "username/topicname" for our server format, so concatenate strings
-const std::string MQTT_TOPIC_NAME = MQTT_USERNAME + "/Rabbit/MicroController";
+const std::string MQTT_TOPIC_NAME = MQTT_USERNAME + "/RABBIT/Micro";
 
 // TLS/SSL certificate for encrypted mqtt:
 const char* CA_CERT =
