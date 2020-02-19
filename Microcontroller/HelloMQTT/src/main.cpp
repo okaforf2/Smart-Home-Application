@@ -6,6 +6,11 @@
 
 #include <Arduino.h>
 
+const int SERIAL_0_SPEED = 9600;
+const int LEDPort = 32;
+//bool LEDSet = false;
+
+
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>
@@ -34,6 +39,13 @@ void receivedCallback(char* topic, byte* payload, unsigned int length) {
     Serial.print("  Message reads:  ");
     for (int i = 0; i < length; i++) {
         Serial.print((char)payload[i]);
+    }
+    //Turns LED on and of based upon MQTT message sent.
+    if ((char)payload[0] == '1'){
+        digitalWrite(LEDPort, HIGH);
+    }
+    else if((char)payload[0] == '0'){
+        digitalWrite(LEDPort, LOW);
     }
     Serial.println();
     blinkLED(2);
@@ -65,6 +77,11 @@ void mqttConnect() {
 }
 
 void setup() {
+    pinMode(LEDPort, OUTPUT);
+
+    Serial.begin(SERIAL_0_SPEED);
+    Serial.println("Starting LED test");
+
     pinMode(onboardLED, OUTPUT);
     Serial.begin(9600);
     Serial.println();
@@ -104,11 +121,18 @@ void setup() {
 }
 
 void loop() {
+    /* For basic LED turn on test.
+    digitalWrite(LEDPort, HIGH);
+    delay(2000);
+    digitalWrite(LEDPort, LOW);
+    delay(2000);
+    */
+
     mqttConnect();
 
     // this function will listen for incoming subscribed topic processes and invoke receivedCallback()
     mqttClient.loop();
-
+    /* Used for sending data
     // we send a reading every 5 secs
     // we count until 5 secs reached to avoid blocking program (instead of using delay())
     long now = millis();
@@ -116,11 +140,16 @@ void loop() {
         lastMsgTimer = now;
 
         // just convert time stamp to a c-string and send as data:
-        String dataToSend = String(millis()); // dataToSend could be a sensor reading instead
+        String dataToSend = String(LEDSet); // dataToSend could be a sensor reading instead
         Serial.println();
         Serial.print("Publishing data:  ");
         Serial.println(dataToSend);
         blinkLED(1);
         mqttClient.publish(MQTT_TOPIC_NAME.c_str(), dataToSend.c_str());
     }
+    if (LEDSet == 1)
+        LEDSet = 0;
+    else if (LEDSet == 0)
+        LEDSet = 1;
+        */
 }
