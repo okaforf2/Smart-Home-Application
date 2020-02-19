@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import Chat from './components/Chat.js'
+import Alarm from './components/Alarm.js'
 
 
 class App extends Component {
@@ -35,7 +36,8 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Chat />
+                <Alarm />
+                {/* <Chat /> */}
             </div>
             // //<Input client={client} />
             // <a href="#" onClick={this.handleClick}>
