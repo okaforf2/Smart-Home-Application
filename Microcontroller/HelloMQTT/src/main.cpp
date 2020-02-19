@@ -10,7 +10,7 @@ const int SERIAL_0_SPEED = 9600;
 const int LEDPort = 32;
 //bool LEDSet = false;
 
-
+/*
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>
@@ -41,12 +41,13 @@ void receivedCallback(char* topic, byte* payload, unsigned int length) {
         Serial.print((char)payload[i]);
     }
     //Turns LED on and of based upon MQTT message sent.
-    if ((char)payload[0] == '1'){
+    if ((char)payload[0] == 'O' && (char)payload[1] == 'N'){
         digitalWrite(LEDPort, HIGH);
     }
-    else if((char)payload[0] == '0'){
+    else if((char)payload[0] == 'O' && (char)payload[1] == 'F' && (char)payload[2] == 'F'){
         digitalWrite(LEDPort, LOW);
     }
+    
     Serial.println();
     blinkLED(2);
 }
@@ -75,10 +76,12 @@ void mqttConnect() {
         }
     }
 }
-
+*/
 void setup() {
     pinMode(LEDPort, OUTPUT);
-
+    digitalWrite(LEDPort, LOW);
+    digitalPinHasPWM(LEDPort)
+/*
     Serial.begin(SERIAL_0_SPEED);
     Serial.println("Starting LED test");
 
@@ -118,6 +121,7 @@ void setup() {
 
     // The receivedCallback() function will be invoked when this client receives the subscribed topic:
     mqttClient.setCallback(receivedCallback);
+*/
 }
 
 void loop() {
@@ -128,10 +132,13 @@ void loop() {
     delay(2000);
     */
 
-    mqttConnect();
+   
+   //PWM
+
+   // mqttConnect();
 
     // this function will listen for incoming subscribed topic processes and invoke receivedCallback()
-    mqttClient.loop();
+    //mqttClient.loop();
     /* Used for sending data
     // we send a reading every 5 secs
     // we count until 5 secs reached to avoid blocking program (instead of using delay())
