@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import '../index.css';
 import { Switch } from 'antd';

@@ -1,7 +1,7 @@
 import React from 'react'
 import '../index.css'
 import 'antd/dist/antd.css';
-import { Switch, Button } from 'antd';
+import { Switch } from 'antd';
 
 class Alarm extends React.Component {
     onChange(checked) {
