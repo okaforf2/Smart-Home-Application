@@ -4,6 +4,8 @@ const uuidv4 = require('uuid/v4');
 const http = require('http');
 const server = http.createServer();
 
+//////////////////// MQTT Setup ////////////////////////
+
 var mqtt = require('mqtt');
 const fs = require('fs');
 var caFile = fs.readFileSync("mqtt.crt");
@@ -44,6 +46,8 @@ mqttClient.on("message", function (topic, message, packet) {
 
 mqttClient.subscribe("302CEM/RABBIT/helloWorld", { qos: 1 });
 
+//////////////////// WebSocket Setup ///////////////////
+
 server.listen(webSocketsServerPort);
 
 const wsServer = new webSocketServer({
@@ -55,6 +59,7 @@ const getUniqueID = () => {
     return val;
 };
 
+//Clients connected via websockets
 const clients = [];
 
 wsServer.on('request', function (request) {
@@ -67,21 +72,16 @@ wsServer.on('request', function (request) {
 
     connection.on('message', function (message) {
         console.log(message);
-        //connection.send('ahoy sailor');
         try {
             var parsedJson = JSON.parse(message.utf8Data);
             console.log("message parsed successfully: " + parsedJson);
-
-            //var clientsDuplicate = clients;
+            
             var clientsDuplicate = [].concat(clients);
-            console.log(clients.length);
-            console.log(clientsDuplicate.length);
             const index = clientsDuplicate.indexOf(connection);
             if (index > -1) {
                 console.log("found connection and splicing");
                 clientsDuplicate.splice(index, 1);
                 clientsDuplicate.forEach(function each(client) {
-                    console.log("sending message to client: " + client);
                     client.send(message.utf8Data);
                 });
             }

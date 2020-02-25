@@ -8,15 +8,15 @@ class Light extends React.Component {
 
     onChange(checked) {
         console.log(`switch to ${checked}`);
-      }
-      
-     render() {
+    }
+
+    render() {
         return (
-        <div>
-        <p>Light: <Switch defaultChecked onChange={this.onChange} /> </p>
-        </div>
+            <div>
+                <p>Light: <Switch defaultChecked onChange={this.onChange} /> </p>
+            </div>
         );
-     }  
+    }
 
 }
 

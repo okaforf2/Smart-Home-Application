@@ -6,17 +6,17 @@ import { Switch } from 'antd';
 class Alarm extends React.Component {
     onChange(checked) {
         console.log(`switch to ${checked}`);
-        }
-        
-        render() {
+    }
+
+    render() {
         return (
-        <div>
-        <p>Alarm: <Switch defaultChecked onChange={this.onChange} /> </p>
-        </div>
+            <div>
+                <p>Alarm: <Switch defaultChecked onChange={this.onChange} /> </p>
+            </div>
         );
-        } 
-        
-       }
+    }
+
+}
 
 
 export default Alarm;

@@ -43,7 +43,7 @@ class Chat extends Component {
 	submitMessage = messageString => {
 		// on submitting the ChatInput form, send the message, add it to the list and reset the input
 		if (String(messageString).length !== 0) {
-			const message = { name: this.state.name, message: messageString }
+			const message = { type: 'message', name: this.state.name, message: messageString }
 			this.ws.send(JSON.stringify(message))
 			this.addMessage(message)
 		}
