@@ -12,11 +12,12 @@
 
 #include "mqttcert.h"
 
+
 int led = 25;
 int sensor = 33;
 String dataToSend;
 int sensorval = 0;
-int z;
+int valueReturned;
 //int valueRecieved;
 
 
@@ -29,6 +30,7 @@ PubSubClient mqttClient(espClient);
 
 long lastMsgTimer = 0;
 const int onboardLED = 2; // GPIO2 (D2) on the DOIT-ESP32-DevKitV1
+const int LEDLightPort = 32;
 
 // The receivedCallback() function will be invoked when this client receives data about the subscribed topic:
  void receivedCallback(char* topic, byte* payload, unsigned int length) 
@@ -44,15 +46,24 @@ const int onboardLED = 2; // GPIO2 (D2) on the DOIT-ESP32-DevKitV1
         
     }
     
+     if((char)payload[0] == 'L' && (char)payload[1] == 'E' && (char)payload[2] == 'D'  && (char)payload[3] == 'O'  && (char)payload[4] == 'N')
+    { 
+      digitalWrite(LEDLightPort, HIGH);
+    }
+
+    else if((char)payload[0] == 'L' && (char)payload[1] == 'E' && (char)payload[2] == 'D'  && (char)payload[3] == 'O' && (char)payload[4] == 'F' && (char)payload[5] == 'F')
+    {
+      digitalWrite(LEDLightPort, LOW);
+    }  
      
     if((char)payload[0] == 'O' && (char)payload[1] == 'N')
     { 
-      z = 1;
+      valueReturned = 1;
     }
 
     else if((char)payload[0] == 'O' && (char)payload[1] == 'F' && (char)payload[2] == 'F')
     {
-      z = 0;
+      valueReturned = 0;
     }  
 
     Serial.println();
@@ -86,6 +97,8 @@ void setup() {
     pinMode(onboardLED, OUTPUT);
     pinMode(led, OUTPUT);
     pinMode(sensor, INPUT);
+    pinMode(LEDLightPort, OUTPUT);
+    digitalWrite(LEDLightPort, LOW);
     Serial.begin(9600);
     Serial.println();
     Serial.println();
@@ -127,10 +140,10 @@ void loop() {
     // this function will listen for incoming subscribed topic processes and invoke receivedCallback()
     mqttClient.loop();
 
-    if(z == 1){
+    if(valueReturned == 1){
 
         sensorval = digitalRead(sensor);
-        delay(10000);
+        delay(5000);
         Serial.println(sensorval);
   
   
@@ -151,7 +164,7 @@ void loop() {
 
     }
 
-    else if(z == 0){
+    else if(valueReturned == 0){
 
         dataToSend = "You haven't set me up yet Mark!";
         
@@ -161,7 +174,7 @@ void loop() {
     // we send a reading every 10 secs
     // we count until 5 secs reached to avoid blocking program (instead of using delay())
     long now = millis();
-    if (now - lastMsgTimer > 10000) {
+    if (now - lastMsgTimer > 5000) {
         lastMsgTimer = now;
 
 
