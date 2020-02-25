@@ -72,10 +72,19 @@ wsServer.on('request', function (request) {
 
     connection.on('message', function (message) {
         console.log(message);
+        var JSONpassed = false;
+        //Parse the message and ensure proper JSON
         try {
-            var parsedJson = JSON.parse(message.utf8Data);
-            console.log("message parsed successfully: " + parsedJson);
-            
+            JSON.parse(message.utf8Data);
+            console.log("JSON message parsed successfully");
+            JSONpassed = true;
+        } catch (err) {
+            console.log("Didnt parse json successfully: " + err);
+            // Probably wasn't correct JSON format
+            // Don't send anything
+        }
+
+        if (JSONpassed) {
             var clientsDuplicate = [].concat(clients);
             const index = clientsDuplicate.indexOf(connection);
             if (index > -1) {
@@ -85,11 +94,7 @@ wsServer.on('request', function (request) {
                     client.send(message.utf8Data);
                 });
             }
-        } catch (err) {
-            console.log("Didnt parse json successfully: " + err);
-            // Probably wasn't correct JSON format
-            // Don't send anything
-        }    
+        }
     });
 
     connection.on('close', function (connection) {
