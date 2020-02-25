@@ -44,7 +44,7 @@ mqttClient.on("message", function (topic, message, packet) {
     }    
 });
 
-mqttClient.subscribe("302CEM/RABBIT/helloWorld", { qos: 1 });
+mqttClient.subscribe("302CEM/RABBIT/fromBroker", { qos: 1 });
 
 //////////////////// WebSocket Setup ///////////////////
 
@@ -73,9 +73,10 @@ wsServer.on('request', function (request) {
     connection.on('message', function (message) {
         console.log(message);
         var JSONpassed = false;
+        var JSONMessage;
         //Parse the message and ensure proper JSON
         try {
-            JSON.parse(message.utf8Data);
+            JSONMessage = JSON.parse(message.utf8Data);
             console.log("JSON message parsed successfully");
             JSONpassed = true;
         } catch (err) {
@@ -93,6 +94,9 @@ wsServer.on('request', function (request) {
                 clientsDuplicate.forEach(function each(client) {
                     client.send(message.utf8Data);
                 });
+            }
+            if (JSONMessage.type !== "message") {
+                mqttClient.publish("302CEM/RABBIT/fromBackend", message.utf8Data);
             }
         }
     });
