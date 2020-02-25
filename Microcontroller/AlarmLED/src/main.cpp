@@ -46,7 +46,7 @@ const int LEDLightPort = 32;
         
     }
     
-     if((char)payload[0] == 'L' && (char)payload[1] == 'E' && (char)payload[2] == 'D'  && (char)payload[3] == 'O'  && (char)payload[4] == 'N')
+     if((char)payload[0] == 'L' && (char)payload[1] == 'E' && (char)payload[2] == 'D'  && (char)payload[3] == 'O' && (char)payload[4] == 'N')
     { 
       digitalWrite(LEDLightPort, HIGH);
     }
@@ -167,6 +167,8 @@ void loop() {
     else if(valueReturned == 0){
 
         dataToSend = "You haven't set me up yet Mark!";
+        digitalWrite(led, LOW);
+
         
 
     }
