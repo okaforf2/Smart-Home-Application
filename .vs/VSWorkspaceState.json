@@ -1,13 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\frontend",
-    "\\frontend\\ui_frontend",
-    "\\frontend\\ui_frontend\\public",
-    "\\frontend\\ui_frontend\\src",
-    "\\frontend\\ui_frontend\\src\\components",
+    "\\Microcontroller",
+    "\\Microcontroller\\AlarmLED",
+    "\\Microcontroller\\AlarmLED\\include",
+    "\\Microcontroller\\AlarmLED\\lib",
+    "\\Microcontroller\\AlarmLED\\src",
+    "\\Microcontroller\\HelloMQTT",
+    "\\Microcontroller\\HelloMQTT\\include",
+    "\\Microcontroller\\HelloMQTT\\ProjectForRabbit",
     "\\test_backend"
   ],
-  "SelectedNode": "\\frontend\\ui_frontend\\src\\components\\Chat.js",
+  "SelectedNode": "\\test_backend\\index.js",
   "PreviewInSolutionExplorer": false
 }

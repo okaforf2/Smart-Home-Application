@@ -3,38 +3,10 @@ import React, { Component } from 'react'
 import ChatInput from './ChatInput'
 import ChatMessage from './ChatMessage'
 
-
-const URL = 'ws://localhost:8000'
-
 class Chat extends Component {
 	state = {
 		name: 'Bob',
 		messages: [],
-	}
-
-	ws = new WebSocket(URL)
-
-	componentDidMount() {
-		this.ws.onopen = () => {
-			// on connecting, do nothing but log it to the console
-			console.log('connected')
-		}
-
-		this.ws.onmessage = evt => {
-			// on receiving a message, add it to the list of messages
-			console.log(evt);
-			const message = JSON.parse(evt.data)
-			this.addMessage(message)
-		}
-
-
-		this.ws.onclose = () => {
-			console.log('disconnected')
-			// automatically try to reconnect on connection loss
-			this.setState({
-				ws: new WebSocket(URL),
-			})
-		}
 	}
 
 	addMessage = message =>
@@ -43,8 +15,9 @@ class Chat extends Component {
 	submitMessage = messageString => {
 		// on submitting the ChatInput form, send the message, add it to the list and reset the input
 		if (String(messageString).length !== 0) {
+			const { websocket } = this.props;
 			const message = { type: 'message', name: this.state.name, message: messageString }
-			this.ws.send(JSON.stringify(message))
+			websocket.send(JSON.stringify(message))
 			this.addMessage(message)
 		}
 	}
@@ -57,7 +30,7 @@ class Chat extends Component {
 				</div>
 				<label htmlFor="name">
 					Name:&nbsp;
-		  <input
+				<input
 						// style={{ position: 'absolute', right: '150px', width: '200px', height: '120px'}}
 						type="text"
 						id={'name'}
