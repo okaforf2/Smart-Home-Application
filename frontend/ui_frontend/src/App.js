@@ -3,6 +3,7 @@ import React, { Component } from 'react';
  import Chat from './components/Chat'
 // import Alarm from './components/Alarm'
 import Light from './components/Light'
+import Time from './components/Time'
 import { Layout, Menu, Breadcrumb } from 'antd';
 
 const { Header, Content, Footer } = Layout;
@@ -92,7 +93,7 @@ class App extends Component {
                         <Breadcrumb.Item>Garage</Breadcrumb.Item>
                     </Breadcrumb>
                     <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
-
+                        <Time />
                         {/* <Alarm /> */}
                         <br />
                         <Light websocket={this.state.ws} ref={this.lightChild} />
