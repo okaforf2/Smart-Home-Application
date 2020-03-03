@@ -6,6 +6,7 @@
 
 #include <Arduino.h>
 #include <ArduinoJson.h>
+#include <analogWrite.h>
 
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
@@ -19,6 +20,7 @@ int sensor = 33;
 String dataToSend;
 int sensorval = 0;
 int valueReturned;
+int val = 0;
 //int valueRecieved;
 
 
@@ -46,37 +48,24 @@ const int LEDLightPort = 32;
     Serial.println(input);
     deserializeJson(doc, input);
     JsonObject obj = doc.as<JsonObject>();
-    String sensor = obj["type"];
-    Serial.println(sensor);
+    String somethingToMakeItRun = obj["type"];
+    int state = obj["state"];
+    Serial.println(somethingToMakeItRun);
 
-
-    //if(input == "")
-    for (int i = 0; i < length; i++) 
-    {   
-        payload[i] = toupper(payload[i]);
-        Serial.print((char)payload[i]);
-        
+    if(somethingToMakeItRun.equals("light")){
+        switch(state){
+            case 0: analogWrite(led, 0);
+            break;
+            case 1: analogWrite(led, 64);
+            break;
+            case 2: analogWrite(led, 127);
+            break;
+            case 3: analogWrite(led, 192);
+            break;
+            case 4: analogWrite(led, 255);
+            break;
+        }
     }
-    
-     if((char)payload[0] == 'L' && (char)payload[1] == 'E' && (char)payload[2] == 'D'  && (char)payload[3] == 'O' && (char)payload[4] == 'N')
-    { 
-      digitalWrite(LEDLightPort, HIGH);
-    }
-
-    else if((char)payload[0] == 'L' && (char)payload[1] == 'E' && (char)payload[2] == 'D'  && (char)payload[3] == 'O' && (char)payload[4] == 'F' && (char)payload[5] == 'F')
-    {
-      digitalWrite(LEDLightPort, LOW);
-    }  
-     
-    if((char)payload[0] == 'O' && (char)payload[1] == 'N')
-    { 
-      valueReturned = 1;
-    }
-
-    else if((char)payload[0] == 'O' && (char)payload[1] == 'F' && (char)payload[2] == 'F')
-    {
-      valueReturned = 0;
-    }  
 
     Serial.println();
 }
@@ -109,8 +98,10 @@ void setup() {
     pinMode(onboardLED, OUTPUT);
     pinMode(led, OUTPUT);
     pinMode(sensor, INPUT);
-    pinMode(LEDLightPort, OUTPUT);
-    digitalWrite(LEDLightPort, LOW);
+    //pinMode(LEDLightPort, OUTPUT);
+    //digitalWrite(LEDLightPort, LOW);
+    analogWriteResolution(led, 12);
+
     Serial.begin(9600);
     Serial.println();
     Serial.println();
@@ -147,6 +138,16 @@ void setup() {
 }
 
 void loop() {
+    /*
+    analogWrite(led, 255);
+    delay(1000);
+    analogWrite(led, 128);
+    delay(1000);
+    analogWrite(led, 40);
+    delay(2500);
+    analogWrite(led, 0);
+    delay(1000);
+    */
     mqttConnect();
 
     // this function will listen for incoming subscribed topic processes and invoke receivedCallback()
@@ -178,7 +179,7 @@ void loop() {
 
     else if(valueReturned == 0){
 
-        dataToSend = "You haven't set me up yet Mark!";
+        dataToSend = "YEE!";
         digitalWrite(led, LOW);
 
         
