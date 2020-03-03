@@ -44,7 +44,12 @@ mqttClient.on("message", function (topic, message, packet) {
     }    
 });
 
-mqttClient.subscribe("302CEM/RABBIT/fromBroker", { qos: 1 });
+mqttClient.on("disconnect", function (packet) {
+    console.log(packet);
+    console.log("MQTT client disconnected for some reason");
+});
+
+mqttClient.subscribe("302CEM/RABBIT/FromMicro", { qos: 1 });
 
 //////////////////// WebSocket Setup ///////////////////
 

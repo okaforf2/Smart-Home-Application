@@ -11,11 +11,13 @@ dirname = os.path.dirname(__file__)
 filename = os.path.join(dirname, 'mqtt.crt')
 
 database_functions.initial_setup()
+#database_functions.insert_message("hello friend")
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to MQTT broker with result code "+str(rc))
 
-    client.subscribe("302CEM/RABBIT/helloWorld")
+    client.subscribe("302CEM/RABBIT/FromServer")
+    #client.subscribe("302CEM/RABBIT/FromMicro")
 
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))

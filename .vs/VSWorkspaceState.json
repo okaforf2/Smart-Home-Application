@@ -6,11 +6,8 @@
     "\\frontend\\ui_frontend\\public",
     "\\frontend\\ui_frontend\\src",
     "\\frontend\\ui_frontend\\src\\components",
-    "\\Microcontroller\\HelloMQTT",
-    "\\Microcontroller\\HelloMQTT\\include",
-    "\\Microcontroller\\HelloMQTT\\ProjectForRabbit",
     "\\test_backend"
   ],
-  "SelectedNode": "\\frontend\\ui_frontend\\src\\components\\Light.js",
+  "SelectedNode": "\\test_backend",
   "PreviewInSolutionExplorer": false
 }
