@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 // import Alarm from './components/Alarm'
 import Light from './components/Light'
 import Time from './components/Time'
+import PowerUsageDisplay from './components/PowerUsageDisplay'
 import { Layout, Menu, Breadcrumb } from 'antd';
 
 const { Header, Content, Footer } = Layout;
@@ -18,6 +19,7 @@ class App extends Component {
         };
         this.chatChild = React.createRef();
         this.lightChild = React.createRef();
+        this.powerUsageDisplayChild = React.createRef();
     }
 
     componentDidMount() {
@@ -44,6 +46,8 @@ class App extends Component {
                     case "light":
                         this.changeLightSwitchState(message.state);
                         break;
+                    case "power usage":
+                        this.changePowerUsageState(message.state);    
                     default:
                         break;
                 }
@@ -63,6 +67,10 @@ class App extends Component {
 
     changeLightSwitchState(data) {
         this.lightChild.current.changeSwitchState(data);
+    }
+
+    changePowerUsageState(data) {
+        this.powerUsageDisplayChild.current.changePowerUsageValueState(data);
     }
 
     passChatMessage(data) {
@@ -99,6 +107,8 @@ class App extends Component {
                         <Light websocket={this.state.ws} ref={this.lightChild} />
                         <br />
                         <Chat websocket={this.state.ws} ref={this.chatChild} />
+                        <br />
+                        <PowerUsageDisplay websocket={this.state.ws} ref={this.powerUsageDisplayChild} />
 
                     </div>
 
