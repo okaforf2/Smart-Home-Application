@@ -96,7 +96,7 @@ wsServer.on('request', function (request) {
                 });
             }
             if (JSONMessage.type !== "message") {
-                mqttClient.publish("302CEM/RABBIT/fromBackend", message.utf8Data);
+                mqttClient.publish("302CEM/RABBIT/FromServer", message.utf8Data);
             }
         }
     });

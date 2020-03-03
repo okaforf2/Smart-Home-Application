@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Microcontroller",
-    "\\Microcontroller\\AlarmLED",
-    "\\Microcontroller\\AlarmLED\\include",
-    "\\Microcontroller\\AlarmLED\\lib",
-    "\\Microcontroller\\AlarmLED\\src",
+    "\\frontend",
+    "\\frontend\\ui_frontend",
+    "\\frontend\\ui_frontend\\public",
+    "\\frontend\\ui_frontend\\src",
+    "\\frontend\\ui_frontend\\src\\components",
     "\\Microcontroller\\HelloMQTT",
     "\\Microcontroller\\HelloMQTT\\include",
     "\\Microcontroller\\HelloMQTT\\ProjectForRabbit",
     "\\test_backend"
   ],
-  "SelectedNode": "\\test_backend\\index.js",
+  "SelectedNode": "\\frontend\\ui_frontend\\src\\components\\Light.js",
   "PreviewInSolutionExplorer": false
 }
