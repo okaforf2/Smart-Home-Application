@@ -20,7 +20,8 @@ int sensor = 33;
 String dataToSend;
 int sensorval = 0;
 int valueReturned;
-int val = 0;
+int timerMax = 0;
+int timerCurrent = 0;
 //int valueRecieved;
 
 
@@ -49,21 +50,38 @@ const int LEDLightPort = 32;
     deserializeJson(doc, input);
     JsonObject obj = doc.as<JsonObject>();
     String somethingToMakeItRun = obj["type"];
-    int state = obj["state"];
+    String state = obj["state"];
+    int val = obj["val"];
     Serial.println(somethingToMakeItRun);
 
     if(somethingToMakeItRun.equals("light")){
-        switch(state){
-            case 0: analogWrite(led, 0);
-            break;
-            case 1: analogWrite(led, 64);
-            break;
-            case 2: analogWrite(led, 127);
-            break;
-            case 3: analogWrite(led, 192);
-            break;
-            case 4: analogWrite(led, 255);
-            break;
+        if(state.equals("intensity")){
+            switch(val){
+                case 0: analogWrite(led, 0);
+                break;
+                case 1: analogWrite(led, 64);
+                break;
+                case 2: analogWrite(led, 127);
+                break;
+                case 3: analogWrite(led, 192);
+                break;
+                case 4: analogWrite(led, 255);
+                break;
+            }
+        }
+        else if (state.equals("timer")){
+             switch(val){
+                case 0: timerMax = 15;
+                break;
+                case 1: timerMax = 30;
+                break;
+                case 2: timerMax = 45;
+                break;
+                case 3: timerMax = 60;
+                break;
+                case 4: timerMax = 75;
+                break;
+             }
         }
     }
 
@@ -138,6 +156,7 @@ void setup() {
 }
 
 void loop() {
+
     /*
     analogWrite(led, 255);
     delay(1000);
