@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { w3cwebsocket as W3CWebSocket } from "websocket";
- import Chat from './components/Chat'
+//  import Chat from './components/Chat'
 // import Alarm from './components/Alarm'
 import Light from './components/Light'
 import Time from './components/Time'
@@ -47,7 +47,8 @@ class App extends Component {
                         this.changeLightSwitchState(message.state);
                         break;
                     case "power usage":
-                        this.changePowerUsageState(message.state);    
+                        this.changePowerUsageState(message.state);
+                        break;    
                     default:
                         break;
                 }
@@ -89,16 +90,16 @@ class App extends Component {
                         defaultSelectedKeys={['2']}
                         style={{ lineHeight: '64px' }}
                     >
-                        <Menu.Item key="1">nav 1</Menu.Item>
-                        <Menu.Item key="2">nav 2</Menu.Item>
-                        <Menu.Item key="3">nav 3</Menu.Item>
+                        <Menu.Item key="1">Kitchen</Menu.Item>
+                        <Menu.Item key="2">Toilet</Menu.Item>
+                        <Menu.Item key="3">Garage</Menu.Item>
                     </Menu>
                 </Header>
-                <Content style={{ padding: '0 50px' }}>
-                    <Breadcrumb style={{ margin: '16px 0' }}>
-                        <Breadcrumb.Item>Kitchen</Breadcrumb.Item>
+                <Content style={{ padding: '20px 50px' }}>
+                    <Breadcrumb style={{ margin: '16px 0px' }}>
+                        {/* <Breadcrumb.Item>Kitchen</Breadcrumb.Item>
                         <Breadcrumb.Item>Toilet</Breadcrumb.Item>
-                        <Breadcrumb.Item>Garage</Breadcrumb.Item>
+                        <Breadcrumb.Item>Garage</Breadcrumb.Item> */}
                     </Breadcrumb>
                     <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
                         <Time />
@@ -106,7 +107,7 @@ class App extends Component {
                         <br />
                         <Light websocket={this.state.ws} ref={this.lightChild} />
                         <br />
-                        <Chat websocket={this.state.ws} ref={this.chatChild} />
+                        {/* <Chat websocket={this.state.ws} ref={this.chatChild} /> */}
                         <br />
                         <PowerUsageDisplay websocket={this.state.ws} ref={this.powerUsageDisplayChild} />
 

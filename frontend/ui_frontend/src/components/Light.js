@@ -2,26 +2,26 @@ import React from 'react';
 // import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import '../index.css';
-import { Switch } from 'antd';
+import { Slider } from 'antd';
 
 // Switch should be set to actual light status but will leave it at off for now
 class Light extends React.Component {
     state = {
-        isSwitchOn: false
+        switchState: 0
     };
     handlePressed = (e) => {
         const { websocket } = this.props;
-        const message = { type: 'light', state: e }
+        const message = { type: 'light', state: e/25 }
         websocket.send(JSON.stringify(message))
         console.log(e);
         this.setState({
-            isSwitchOn: e
+            switchState: e
         });
-        if (this.state.isSwitchOn === false) {
-            console.log('Light is now on, changed from off');            
-        } else {
-            console.log('Light is now off, changed from on');
-        }
+        // if (this.state.isSwitchOn === false) {
+        //     console.log('Light is now on, changed from off');            
+        // } else {
+        //     console.log('Light is now off, changed from on');
+        // }
     }
 
     passStatus = messageStatus =>
@@ -34,26 +34,28 @@ class Light extends React.Component {
         });
     }
 
-    // submitMessage = messageString => {
-    // 	// on submitting the ChatInput form, send the message, add it to the list and reset the input
-    // 	if (String(messageString).length !== 0) {
-    // 		const message = { type: 'message', name: this.state.name, message: messageString }
-    // 		this.ws.send(JSON.stringify(message))
-    // 		this.addMessage(message)
-    // 	}
-    // }
-
-
-    // onChange(checked) {
-    //     console.log(`switch to ${checked}`);
-    // }
-
+// 25% (light)
 
     render() {
         // const buttonPressed = this.state.buttonPressed
+        const marks = {
+            0: '0%',
+            25: '25%',
+            50: '50%',
+            75: '75%',
+            100: {
+              style: {
+                color: '#f50',
+              },
+              label: <strong>100%</strong>,
+            },
+          };
         return (
             <div>
-                <p>Light: <Switch defaultChecked onClick={this.handlePressed} checked={this.state.isSwitchOn} /> </p>
+                {/* <p>Light: <Switch defaultChecked onClick={this.handlePressed} checked={this.state.isSwitchOn} /> </p> */}
+
+
+                <p>Light: <Slider marks={marks} step={null} defaultValue={0} onChange={this.handlePressed} checked={this.state.isSwitchOn}/> </p>
             </div>
         );
     }
