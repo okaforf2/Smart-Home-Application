@@ -16,12 +16,15 @@
 
 
 int led = 25;
+bool ledOn = false;
+int ledIntensity = 0;
 int sensor = 33;
 String dataToSend;
 int sensorval = 0;
 int valueReturned;
 int timerMax = 0;
-int timerCurrent = 0;
+long timerCurrent = 0;
+
 //int valueRecieved;
 
 
@@ -57,16 +60,19 @@ const int LEDLightPort = 32;
     if(somethingToMakeItRun.equals("light")){
         if(state.equals("intensity")){
             switch(val){
-                case 0: analogWrite(led, 0);
+                case 0: ledIntensity = 0;
                 break;
-                case 1: analogWrite(led, 64);
+                case 1: ledIntensity = 64;
                 break;
-                case 2: analogWrite(led, 127);
+                case 2: ledIntensity = 127;
                 break;
-                case 3: analogWrite(led, 192);
+                case 3: ledIntensity = 192;
                 break;
-                case 4: analogWrite(led, 255);
+                case 4: ledIntensity = 255;
                 break;
+            }
+            if (ledOn == true){
+                analogWrite(led, ledIntensity);
             }
         }
         else if (state.equals("timer")){
@@ -171,43 +177,40 @@ void loop() {
 
     // this function will listen for incoming subscribed topic processes and invoke receivedCallback()
     mqttClient.loop();
-
-    if(valueReturned == 1){
+        long now = millis();
 
         sensorval = digitalRead(sensor);
-        delay(5000);
-        Serial.println(sensorval);
+        if((millis()%1000) == 0) {Serial.println(sensorval);} 
   
-  
-        if (sensorval == HIGH) 
+        if (sensorval == HIGH)
         {
-        digitalWrite(led, HIGH);
-        delay(1000);
-        dataToSend = "Movement detected!";
+        timerCurrent = now;
+        analogWrite(led, ledIntensity);
+        ledOn = true;
+        Serial.println("Movement detected");        
         }
-     
-        else 
-        {
-        digitalWrite(led, LOW);
-        delay(100);
-        dataToSend = "No movement detected!";
-        }  
+
+        if((now - timerCurrent) / 1000 > timerMax){
+            ledOn = false;
+            analogWrite(led, 0);
+            Serial.println("Timer finished");
+        }
+
+/*
+        if (((millis()%1000) == 0) && ledOn == true){timerCurrent++;}
+        if (timerCurrent >= timerMax){
+            ledOn = false;
+            analogWrite(led, 0);
+            timerCurrent = 0;
+            Serial.println("Timer finished");
+        }
+        */
 
 
-    }
-
-    else if(valueReturned == 0){
-
-        dataToSend = "YEE!";
-        digitalWrite(led, LOW);
-
-        
-
-    }
 
     // we send a reading every 10 secs
     // we count until 5 secs reached to avoid blocking program (instead of using delay())
-    long now = millis();
+    
     if (now - lastMsgTimer > 5000) {
         lastMsgTimer = now;
 
