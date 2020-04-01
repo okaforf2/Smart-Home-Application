@@ -5,7 +5,9 @@ import React, { Component } from 'react';
 import Light from './components/Light'
 import Time from './components/Time'
 import PowerUsageDisplay from './components/PowerUsageDisplay'
+import Alarm from './components/AlarmSecurity'
 import { Layout, Menu, Breadcrumb } from 'antd';
+import AlarmSecurity from './components/AlarmSecurity';
 
 const { Header, Content, Footer } = Layout;
 const URL = 'ws://localhost:8000'
@@ -105,12 +107,13 @@ class App extends Component {
                         <Time />
                         {/* <Alarm /> */}
                         <br />
-                        <Light websocket={this.state.ws} ref={this.lightChild} />
+                        {/* <Light websocket={this.state.ws} ref={this.lightChild} /> */}
                         <br />
                         {/* <Chat websocket={this.state.ws} ref={this.chatChild} /> */}
                         <br />
-                        <PowerUsageDisplay websocket={this.state.ws} ref={this.powerUsageDisplayChild} />
-
+                        {/* <PowerUsageDisplay websocket={this.state.ws} ref={this.powerUsageDisplayChild} /> */}
+                        
+                        <AlarmSecurity />
                     </div>
 
                 </Content>

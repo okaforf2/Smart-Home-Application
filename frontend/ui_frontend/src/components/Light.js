@@ -2,13 +2,17 @@ import React from 'react';
 // import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import '../index.css';
-import { Slider } from 'antd';
+import { Slider, Switch } from 'antd';
 
 // Switch should be set to actual light status but will leave it at off for now
 class Light extends React.Component {
     state = {
         switchState: 0
     };
+    
+    
+    
+    
     handlePressed = (e) => {
         const { websocket } = this.props;
         const message = { type: 'light', state: e/25 }
@@ -51,11 +55,15 @@ class Light extends React.Component {
             },
           };
         return (
-            <div>
+            <div className="lights">
                 {/* <p>Light: <Switch defaultChecked onClick={this.handlePressed} checked={this.state.isSwitchOn} /> </p> */}
 
 
                 <p>Light: <Slider marks={marks} step={null} defaultValue={0} onChange={this.handlePressed} checked={this.state.isSwitchOn}/> </p>
+
+    <br />
+
+
             </div>
         );
     }
