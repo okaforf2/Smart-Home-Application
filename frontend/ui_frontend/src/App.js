@@ -107,13 +107,13 @@ class App extends Component {
                         <Time />
                         {/* <Alarm /> */}
                         <br />
-                        {/* <Light websocket={this.state.ws} ref={this.lightChild} /> */}
-                        <br />
+                        <Light websocket={this.state.ws} ref={this.lightChild} />
+                        {/* <br /> */}
                         {/* <Chat websocket={this.state.ws} ref={this.chatChild} /> */}
-                        <br />
-                        {/* <PowerUsageDisplay websocket={this.state.ws} ref={this.powerUsageDisplayChild} /> */}
+                        {/* <br /> */}
+                        <PowerUsageDisplay websocket={this.state.ws} ref={this.powerUsageDisplayChild} />
                         
-                        <AlarmSecurity />
+                        <AlarmSecurity websocket={this.state.ws} ref={this.lightChild}/>
                     </div>
 
                 </Content>
